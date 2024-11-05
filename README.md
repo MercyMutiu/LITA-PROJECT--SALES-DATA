@@ -6,3 +6,8 @@ This project made use of Microsoft Excel, SQL and Power BI to analyze the sales 
 
 ### Data sources
 The data set was provided by the facilitators of the program as a final project for the course.
+
+### Tools and Techniques
+- Microsoft Excel: pivot table was used to summarize the sales by product, region and month, also formulas were used to calculate some metrics in the dataset.
+- SQL: the dataset was loaded into the SQL server and different queries were written.
+- Power BI: a dashboard was created and it included the sales overview, the top performing products and the regional breakdown.
