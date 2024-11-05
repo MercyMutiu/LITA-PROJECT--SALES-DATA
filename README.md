@@ -25,18 +25,103 @@ The image above shows the summary of the sales data by product, region and month
  - Average sales per product
 ``` Excel
 =AVERAGEIF(C2:C9922,"shirt",H2:H9922)
+
 =AVERAGEIF(C2:C9922,"shoes",H2:H9922)
+
 =AVERAGEIF(C2:C9922,"Hat",H2:H9922)
+
 =AVERAGEIF(C2:C9922,"Socks",H2:H9922)
+
 =AVERAGEIF(C2:C9922,"Jacket",H2:H9922)
+
 =AVERAGEIF(C2:C9922,"Gloves",H2:H9922)
 ```
 
- -Total revenue per region
+-Total revenue per region
 ``` Excel
 =SUMIF(D2:D9922,"North",H2:H9922)
+
 =SUMIF(D2:D9922,"south",H2:H9922)
+
 =SUMIF(D2:D9922,"east",H2:H9922)
+
 =SUMIF(D2:D9922,"west",H2:H9922)
 ```
+-SQL: the data was imported from excel into SQL by converting the Excel files into csv file. Several null values were detected and they were first removed before the data was analyzed.
 
+``` SQL
+delete from sales data
+where customer_id is null
+```
+
+-Retrieve the total sales for each product category
+
+```SQL
+select sum(Quantity) as Salesperproduct, Product from SalesData
+group by Product
+```
+
+-Find the number of sales transactions in each region
+
+```SQL
+select region, count(*) as TransactionperRegion
+from SalesData
+group by region
+```
+
+-Find the highest-selling product by total sales value
+
+```SQL
+select top 1 Product, sum(quantity) as SalesperProduct
+from SalesData
+group by Product
+order by SalesperProduct desc
+```
+
+-Calculate total revenue per product
+
+```SQL
+select sum(totalsales) as TotalRevenueperProduct, product from SalesData
+group by product
+```
+
+-Calculate monthly sales totals for the current year
+
+```SQL
+select datepart(month, orderdate) as month, sum(quantity) as MonthlySales
+from SalesData
+where year(orderdate) = year(GETDATE())
+group by datepart(month, orderdate)
+order by datepart(month, orderdate)
+```
+-Find the top 5 customers by total purchase amount
+
+```SQL
+select top 5 customer_id, sum(totalsales) as Toyalpurchaseamount
+from SalesData
+group by Customer_Id
+order by totalpurchaseamount desc
+```
+
+-Calculate the percentage of total sales contributed by each region
+
+```SQL
+select region,
+sum(quantity) as RegionalSales,
+(sum(quantity) * 100/ sum(sum(quantity)) over()) as Percentagesales
+from SalesData
+group by Region
+```
+
+-Identify products with no sales in the last quarter
+
+```SQL
+select product
+from SalesData
+where product not in (
+select distinct Product
+from SalesData
+where orderDate >= '2024-04-01' and orderdate <= '2024-06-01'
+)
+group by Product
+```
