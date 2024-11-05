@@ -11,3 +11,9 @@ The data set was provided by the facilitators of the program as a final project 
 - Microsoft Excel: pivot table was used to summarize the sales by product, region and month, also formulas were used to calculate some metrics in the dataset.
 - SQL: the dataset was loaded into the SQL server and different queries were written.
 - Power BI: a dashboard was created and it included the sales overview, the top performing products and the regional breakdown.
+
+### Steps taken
+1. Data cleaning: the data was cleaned by removing duplicates thus reducing the number of rows to 9921 rows.
+2. Pivot table: the data was summarized and tables were created to show the summary of total sales by product, region and month.
+![image](https://github.com/user-attachments/assets/ddc25f4a-8cd1-4269-ad6d-d1c3e6ce241f)
+
